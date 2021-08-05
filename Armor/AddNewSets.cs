@@ -8,7 +8,6 @@ namespace ReworkedArmors
         internal static void Init()
         {
             ItemManager.OnVanillaItemsAvailable += new Action(AddArmorSets);
-            ItemManager.OnItemsRegistered += new Action(ModExistingRecipes);
         }
 
         private static void AddArmorSets()
@@ -23,19 +22,6 @@ namespace ReworkedArmors
             ArmorHelper.AddArmorSet("padded");
 
             ItemManager.OnVanillaItemsAvailable -= new Action(AddNewSets.AddArmorSets);
-        }
-
-        private static void ModExistingRecipes()
-        {
-            //ArmorHelper.AddTieredRecipes("leather");
-            //ArmorHelper.AddTieredRecipes("trollLeather");
-            //ArmorHelper.AddTieredRecipes("bronze");
-            //ArmorHelper.AddTieredRecipes("iron");
-            //ArmorHelper.AddTieredRecipes("silver");
-            //ArmorHelper.AddTieredRecipes("padded");
-            //ArmorHelper.AddTieredRecipes("rags", false);
-
-            ItemManager.OnItemsRegistered -= new Action(AddNewSets.ModExistingRecipes);
         }
     }
 }
