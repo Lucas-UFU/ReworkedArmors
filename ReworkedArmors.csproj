@@ -38,14 +38,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Armor\AddNewSets.cs" />
+    <Compile Include="Armor\ArmorConfig.cs" />
     <Compile Include="Armor\ArmorHelper.cs" />
     <Compile Include="Armor\Data.cs" />
     <Compile Include="Armor\ModExistingSets.cs" />
-    <Compile Include="Armor\UtilityFunctions.cs" />
     <Compile Include="ReworkedArmors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="armorConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BepInEx.Harmony">

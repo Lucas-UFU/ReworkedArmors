@@ -2,7 +2,6 @@
 using Jotunn.Managers;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -10,8 +9,6 @@ namespace ReworkedArmors
 {
     internal class ArmorHelper
     {
-        private static JObject balance = JObject.Parse(File.ReadAllText(Path.Combine(ReworkedArmors.ModPath, "balance.json")));
-
         public static void ModArmorSet(
           string setName,
           ref ItemDrop.ItemData helmet,
@@ -56,12 +53,11 @@ namespace ReworkedArmors
         public static void ModArmorPiece(
           string setName,
           ref ItemDrop.ItemData piece,
-          JToken values,
           bool isNewSet,
-          int i)
+          int tier,
+          Armor armor)
         {
             Data.ArmorSet armorSet = Data.ArmorSets[setName];
-            JToken values1;
             if (isNewSet)
             {
                 values1 = values[(object)"upgrades"][(object)string.Format("t{0}", (object)i)];
@@ -81,9 +77,9 @@ namespace ReworkedArmors
 
         public static void AddArmorPiece(string setName, string location)
         {
-            JToken values = balance[setName];
+            Armor armorConfig = ReworkedArmors.root.armors.Where(x => x.type == "setName").FirstOrDefault();
             Data.ArmorSet armorSet = Data.ArmorSets[setName];
-            int startingTier = (int)values[(object)"upgrades"][(object)"startingTier"];
+            int startingTier = armorConfig.startingTier;
 
             for (int i = startingTier; i <= 5; ++i)
             {
@@ -110,7 +106,7 @@ namespace ReworkedArmors
 
                 CustomItem customItem = new CustomItem(str1 + "T" + i, str1);
                 customItem.ItemDrop.m_itemData.m_shared.m_name = string.Format("{0}T{1}", str1, i);
-                ModArmorPiece(setName, ref customItem.ItemDrop.m_itemData, values, true, i);
+                ModArmorPiece(setName, ref customItem.ItemDrop.m_itemData, true, i, armorConfig);
                 Recipe instance = ScriptableObject.CreateInstance<Recipe>();
                 instance.name = string.Format("Recipe_{0}T{1}", (object)str1, (object)i);
                 List<Piece.Requirement> requirementList = new List<Piece.Requirement>();
@@ -121,16 +117,16 @@ namespace ReworkedArmors
                     requirementList.Add(MockRequirement.Create(str1 + tier, 1, false));
                 }
 
-                JToken jtoken2 = balance["upgradePath"][(object)string.Format("t{0}", (object)i)];
+                Tier armortTier = ReworkedArmors.root.tiers.Where(x => x.tier == i).FirstOrDefault();
 
-                foreach (JObject jobject in jtoken2[(object)location])
+                foreach (Cost cost in armortTier.costs)
                 {
-                    requirementList.Add(MockRequirement.Create((string)jobject["item"], (int)jobject["amount"], true));
-                    requirementList.Last().m_amountPerLevel = (int)jobject["perLevel"];
+                    requirementList.Add(MockRequirement.Create(cost.item, cost.amount, true));
+                    requirementList.Last().m_amountPerLevel = cost.perLevel;
                 }
        
-                instance.m_craftingStation = Mock<CraftingStation>.Create((string)jtoken2[(object)"station"]);
-                instance.m_minStationLevel = (int)jtoken2[(object)"minLevel"];
+                instance.m_craftingStation = PrefabManager.Cache.GetPrefab<CraftingStation>(armortTier.station);
+                instance.m_minStationLevel = armortTier.minLevel;
                 instance.m_resources = requirementList.ToArray();
                 instance.m_item = customItem.ItemDrop;
                 CustomRecipe customRecipe = new CustomRecipe(instance, true, true);

@@ -19,7 +19,6 @@ namespace ReworkedArmors
             ArmorHelper.AddArmorSet("bronze");
             ArmorHelper.AddArmorSet("iron");
             ArmorHelper.AddArmorSet("silver");
-            ArmorHelper.AddArmorSet("padded");
 
             ItemManager.OnVanillaItemsAvailable -= new Action(AddNewSets.AddArmorSets);
         }

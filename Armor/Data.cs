@@ -105,7 +105,6 @@ namespace ReworkedArmors
             public string ChestName { get; set; }
 
             public string LegsName { get; set; }
-
         }
     }
 }

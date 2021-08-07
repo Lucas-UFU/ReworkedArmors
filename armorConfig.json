@@ -1,0 +1,282 @@
+{
+   "armors":[{
+      "type":"rags",
+      "baseArmor":2,
+      "armorPerLevel":2,
+      "startingTier":1     
+   },
+   {
+      "type":"leather",
+      "baseArmor":2,
+      "armorPerLevel":2,
+      "startingTier":1             
+   },
+   {
+      "type":"trollLeather",
+      "baseArmor":4,
+      "armorPerLevel":2,
+      "startingTier":2
+   },
+   {
+      "type":"bronze",
+      "baseArmor":8,
+      "armorPerLevel":2,
+      "startingTier":3
+   },
+   {
+      "type":"iron",
+      "baseArmor":14,
+      "armorPerLevel":2,
+      "startingTier":4
+   },
+   {
+      "type":"silver",
+      "baseArmor":18,
+      "armorPerLevel":2,
+      "startingTier":5
+   },
+   {
+      "type":"padded",
+      "baseArmor":26,
+      "armorPerLevel":2
+   }
+],
+   "tiers":[
+      {
+         "tier":1,
+         "station":"piece_workbench",
+         "minLevel":1,
+         "baseArmor": 4,
+         "armorPerLevel":2,
+         "moveSpeed":0,
+         "costs":[
+            {
+               "itemType": "head",
+               "item":"TrollHide",
+               "amount":4,
+               "perLevel":2
+            },
+            {
+               "itemType": "head",
+               "item":"BoneFragments",
+               "amount":3,
+               "perLevel":1
+            },
+            {
+               "itemType": "chest",
+               "item":"TrollHide",
+               "amount":5,
+               "perLevel":2
+            },
+            {
+               "itemType": "legs",
+               "item":"TrollHide",
+               "amount":4,
+               "perLevel":2
+            }
+         ]
+      },
+      {
+         "tier":2,
+         "station":"forge",
+         "minLevel":1,
+         "baseArmor":8,
+         "armorPerLevel":2,
+         "moveSpeed":-0.05,
+         "costs":[
+            {
+               "itemType": "head",
+               "item":"Bronze",
+               "amount":4,
+               "perLevel":3
+            },
+            {
+               "itemType": "head",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "chest",
+               "item":"Bronze",
+               "amount":4,
+               "perLevel":3
+            },
+            {
+               "itemType": "chest",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "legs",
+               "item":"Bronze",
+               "amount":4,
+               "perLevel":3
+            },
+            {
+               "itemType": "legs",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            }
+         ]
+      },
+      {
+         "tier":3,
+         "station":"forge",
+         "minLevel":2,
+         "baseArmor":14,
+         "armorPerLevel":2,
+         "moveSpeed":-0.05,
+         "costs":[
+            {
+               "itemType": "head",
+               "item":"Iron",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "head",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "chest",
+               "item":"Iron",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "chest",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "legs",
+               "item":"Iron",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "legs",
+               "item":"DeerHide",
+               "amount":2,
+               "perLevel":0
+            }
+         ]
+      },
+      {
+         "tier":4,
+         "station":"forge",
+         "minLevel":3,
+         "baseArmor":20,
+         "armorPerLevel":2,
+         "moveSpeed":-0.05,
+         "costs":[
+            {
+               "itemType": "head",
+               "item":"Silver",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "head",
+               "item":"WolfPelt",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "head",
+               "item":"TrophyHatchling",
+               "amount":2,
+               "perLevel":0
+            },
+            {
+               "itemType": "chest",
+               "item":"Silver",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "chest",
+               "item":"WolfPelt",
+               "amount":2,
+               "perLevel":2
+            },
+            {
+               "itemType": "chest",
+               "item":"Chain",
+               "amount":1,
+               "perLevel":0
+            },
+            {
+               "itemType": "legs",
+               "item":"Silver",
+               "amount":18,
+               "perLevel":5
+            },
+            {
+               "itemType": "legs",
+               "item":"WolfPelt",
+               "amount":5,
+               "perLevel":2
+            },
+            {
+               "itemType": "legs",
+               "item":"WolfFang",
+               "amount":4,
+               "perLevel":1
+            }
+         ]
+      },
+      {
+         "tier":5,
+         "station":"forge",
+         "minLevel":1,
+         "baseArmor":26,
+         "armorPerLevel":2,
+         "moveSpeed":-0.05,
+         "costs":[
+            {
+               "itemType": "head",
+               "item":"BlackMetal",
+               "amount":10,
+               "perLevel":5
+            },
+            {
+               "itemType": "head",
+               "item":"LinenThread",
+               "amount":15,
+               "perLevel":0
+            },
+            {
+               "itemType": "chest",
+               "item":"BlackMetal",
+               "amount":10,
+               "perLevel":3
+            },
+            {
+               "itemType": "chest",
+               "item":"LinenThread",
+               "amount":20,
+               "perLevel":0
+            },
+            {
+               "itemType": "legs",
+               "item":"BlackMetal",
+               "amount":10,
+               "perLevel":3
+            },
+            {
+               "itemType": "legs",
+               "item":"LinenThread",
+               "amount":20,
+               "perLevel":0
+            }
+         ]
+      }
+   ]   
+}
