@@ -37,11 +37,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Armor\AddNewSets.cs" />
     <Compile Include="Armor\ArmorConfig.cs" />
     <Compile Include="Armor\ArmorHelper.cs" />
-    <Compile Include="Armor\Data.cs" />
-    <Compile Include="Armor\ModExistingSets.cs" />
     <Compile Include="ReworkedArmors.cs" />
   </ItemGroup>
   <ItemGroup>

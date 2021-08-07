@@ -6,6 +6,9 @@ public class Armor
     public int baseArmor { get; set; }
     public int armorPerLevel { get; set; }
     public int startingTier { get; set; }
+    public string helmetID { get; set; }
+    public string chestID { get; set; }
+    public string legsID { get; set; }
 }
 
 public class Cost

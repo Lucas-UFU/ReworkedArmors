@@ -1,7 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
+using Jotunn.Managers;
 using SimpleJson;
+using System;
 using System.IO;
 
 namespace ReworkedArmors
@@ -21,16 +23,23 @@ namespace ReworkedArmors
         {
             root = SimpleJson.SimpleJson.DeserializeObject<Root>(File.ReadAllText(Path.Combine(ModPath, "armorConfig.json")));
 
-            nexusID = Config.Bind<int>("General", "NexusID", 1419, "Nexus mod ID for updates");
+            nexusID = Config.Bind<int>("General", "NexusID", 1420, "Nexus mod ID for updates");
 
             harmony.PatchAll();
-            LoadAssets();
+            ItemManager.OnVanillaItemsAvailable += new Action(AddArmorSets);
         }
 
-        private void LoadAssets()
+        private void AddArmorSets()
         {
-            ModExistingSets.Init();
-            AddNewSets.Init();
-        }       
+            ArmorHelper.AddArmorSet("leather");
+            ArmorHelper.AddArmorPiece("rags", "chest");
+            ArmorHelper.AddArmorPiece("rags", "legs");
+            ArmorHelper.AddArmorSet("trollLeather");
+            ArmorHelper.AddArmorSet("bronze");
+            ArmorHelper.AddArmorSet("iron");
+            ArmorHelper.AddArmorSet("silver");
+
+            ItemManager.OnVanillaItemsAvailable -= new Action(AddArmorSets);
+        }
     }
 }
