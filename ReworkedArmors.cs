@@ -1,10 +1,13 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using HarmonyLib;
 using Jotunn.Managers;
-using SimpleJson;
+using Jotunn.Utils;
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
+using UnityEngine;
 
 namespace ReworkedArmors
 {
@@ -16,16 +19,10 @@ namespace ReworkedArmors
         Harmony harmony = new Harmony(PluginGUID);
         public static readonly string ModPath = Path.GetDirectoryName(typeof (ReworkedArmors).Assembly.Location);
         public static Root root = new Root();
-
-        public static ConfigEntry<int> nexusID;
-
         private void Awake()
         {
+            string filePath = System.IO.Path.GetFullPath(@"..\..\");
             root = SimpleJson.SimpleJson.DeserializeObject<Root>(File.ReadAllText(Path.Combine(ModPath, "armorConfig.json")));
-
-            nexusID = Config.Bind<int>("General", "NexusID", 1420, "Nexus mod ID for updates");
-
-            harmony.PatchAll();
             ItemManager.OnVanillaItemsAvailable += new Action(AddArmorSets);
         }
 
@@ -38,8 +35,10 @@ namespace ReworkedArmors
             ArmorHelper.AddArmorSet("bronze");
             ArmorHelper.AddArmorSet("iron");
             ArmorHelper.AddArmorSet("silver");
+            ArmorHelper.AddArmorSet("plate");
+            ArmorHelper.AddArmorSet("barbarian");      
 
             ItemManager.OnVanillaItemsAvailable -= new Action(AddArmorSets);
-        }
+        }            
     }
 }
