@@ -9,6 +9,7 @@ public class Armor
     public string helmetID { get; set; }
     public string chestID { get; set; }
     public string legsID { get; set; }
+    public bool NoSpeedPenaltyAnd6ArmorDebuff { get; set; }
 }
 
 public class Cost

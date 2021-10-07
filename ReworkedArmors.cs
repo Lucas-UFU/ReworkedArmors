@@ -3,6 +3,7 @@ using HarmonyLib;
 using Jotunn.Managers;
 using Jotunn.Utils;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -17,7 +18,7 @@ namespace ReworkedArmors
     {
         public const string PluginGUID = "Detalhes.ReworkedArmors";
         Harmony harmony = new Harmony(PluginGUID);
-        public static readonly string ModPath = Path.GetDirectoryName(typeof (ReworkedArmors).Assembly.Location);
+        public static readonly string ModPath = Path.GetDirectoryName(typeof(ReworkedArmors).Assembly.Location);
         public static Root root = new Root();
         private void Awake()
         {
@@ -36,9 +37,21 @@ namespace ReworkedArmors
             ArmorHelper.AddArmorSet("iron");
             ArmorHelper.AddArmorSet("silver");
             ArmorHelper.AddArmorSet("plate");
-            ArmorHelper.AddArmorSet("barbarian");      
+            ArmorHelper.AddArmorSet("barbarian");
+            ArmorHelper.AddArmorSet("nomad");
+            ArmorHelper.AddArmorSet("wanderer");
+
+            List<string> sagecolors = new List<string> { "Black", "Blue", "Brown", "Gray", "Green", "Red", "White" };
+
+            foreach (string color in sagecolors)
+            {
+                ArmorHelper.AddArmorPiece("sagetunic", "chest", color);
+                ArmorHelper.AddArmorPiece("sagerobe", "chest", color);
+                ArmorHelper.AddArmorPiece("sagehood", "head", color);
+            }
+    
 
             ItemManager.OnVanillaItemsAvailable -= new Action(AddArmorSets);
-        }            
+        }
     }
 }

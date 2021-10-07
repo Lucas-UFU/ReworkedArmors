@@ -9,7 +9,7 @@ namespace ReworkedArmors
 {
     internal class ArmorHelper
     {
-        public static void AddArmorPiece(string setName, string setPart)
+        public static void AddArmorPiece(string setName, string setPart, string color = "")
         {
             Armor armorConfig = ReworkedArmors.root.armors.Where(x => x.type == setName).FirstOrDefault();
             int startingTier = armorConfig.startingTier;
@@ -19,7 +19,9 @@ namespace ReworkedArmors
             if (setPart == "chest") armorId = armorConfig.chestID;
             if (setPart == "legs") armorId = armorConfig.legsID;
 
-            for (int i = startingTier; i <= 5; ++i)
+            if (!string.IsNullOrEmpty(color)) armorId += color;
+
+            for (int i = startingTier; i <= ReworkedArmors.root.tiers.Count; ++i)
             {
                 Tier armortTier = ReworkedArmors.root.tiers.Where(x => x.tier == i).FirstOrDefault();
                 CustomItem customItem = new CustomItem(armorId + "T" + i, armorId);
@@ -30,6 +32,12 @@ namespace ReworkedArmors
 
                 if (setPart != "head")        
                     customItem.ItemDrop.m_itemData.m_shared.m_movementModifier = (float)armortTier.moveSpeed;
+
+                if (armorConfig.NoSpeedPenaltyAnd6ArmorDebuff)
+                {
+                    customItem.ItemDrop.m_itemData.m_shared.m_movementModifier = 0;
+                    customItem.ItemDrop.m_itemData.m_shared.m_armor -= 6;
+                }
 
                 Recipe instance = ScriptableObject.CreateInstance<Recipe>();
                 instance.name = string.Format("Recipe_{0}T{1}", armorId, i);
