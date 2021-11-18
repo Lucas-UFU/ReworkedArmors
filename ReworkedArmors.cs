@@ -40,6 +40,8 @@ namespace ReworkedArmors
             ArmorHelper.AddArmorSet("barbarian");
             ArmorHelper.AddArmorSet("nomad");
             ArmorHelper.AddArmorSet("wanderer");
+            ArmorHelper.AddArmorSet("dragonslayer");
+            ArmorHelper.AddArmorSet("mistlands");
 
             List<string> sagecolors = new List<string> { "Black", "Blue", "Brown", "Gray", "Green", "Red", "White" };
 
