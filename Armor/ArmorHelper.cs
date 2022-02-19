@@ -1,15 +1,15 @@
-﻿using Jotunn.Configs;
-using Jotunn.Entities;
+﻿using Jotunn.Entities;
 using Jotunn.Managers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace ReworkedArmors
 {
     internal class ArmorHelper
     {
-        public static void AddArmorPiece(string setName, string setPart, string color = "")
+        public static void AddArmorPiece(string setName, string setPart, string color = "", object instance = null)
         {
             Armor armorConfig = ReworkedArmors.root.armors.Where(x => x.type == setName).FirstOrDefault();
             int startingTier = armorConfig.startingTier;
@@ -21,14 +21,41 @@ namespace ReworkedArmors
 
             if (!string.IsNullOrEmpty(color)) armorId += color;
 
+            StatusEffect effect = ObjectDB.m_instance.GetStatusEffect(armorConfig.helmetID);
+
             for (int i = startingTier; i <= ReworkedArmors.root.tiers.Count; ++i)
             {
                 Tier armortTier = ReworkedArmors.root.tiers.Where(x => x.tier == i).FirstOrDefault();
+                GameObject oldItem = PrefabManager.Instance.GetPrefab(armorId);
+                StatusEffect oldItemEffect = oldItem.GetComponent<ItemDrop>().m_itemData.m_shared.m_setStatusEffect;
+
+                if (oldItemEffect is not null) effect = oldItemEffect;
+
                 CustomItem customItem = new CustomItem(armorId + "T" + i, armorId);
                 
+                if (customItem is null)
+                {
+                    Debug.LogError("Reworked Armors - " + armorId + " not found");
+                    return;
+                }
+
+                var cuirass = ObjectDB.instance.GetItemPrefab("ArmorPaddedCuirass");
+                customItem.ItemDrop.m_itemData.m_shared.m_setSize = 3;
+                customItem.ItemDrop.m_itemData.m_shared.m_setStatusEffect = effect;
+                customItem.ItemDrop.m_itemData.m_shared.m_setName = setName;
                 customItem.ItemDrop.m_itemData.m_shared.m_name = string.Format("{0} T{1}", customItem.ItemDrop.m_itemData.m_shared.m_name, i);
                 customItem.ItemDrop.m_itemData.m_shared.m_armor = armortTier.baseArmor;
                 customItem.ItemDrop.m_itemData.m_shared.m_armorPerLevel = armortTier.armorPerLevel;
+                customItem.ItemDrop.m_itemData.m_shared.m_maxDurability = 1000;
+                customItem.ItemDrop.m_itemData.m_shared.m_useDurabilityDrain = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_useDurabilityDrain;
+                customItem.ItemDrop.m_itemData.m_shared.m_durabilityPerLevel = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_durabilityPerLevel;
+                customItem.ItemDrop.m_itemData.m_shared.m_canBeReparied = true;
+                customItem.ItemDrop.m_itemData.m_shared.m_destroyBroken = true;
+                customItem.ItemDrop.m_itemData.m_shared.m_useDurability = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_useDurability;
+                customItem.ItemDrop.m_itemData.m_shared.m_durabilityDrain = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_durabilityDrain;
+                customItem.ItemDrop.m_itemData.m_shared.m_maxQuality = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_maxQuality;
+                customItem.ItemDrop.m_itemData.m_quality = cuirass.GetComponent<ItemDrop>().m_itemData.m_quality;
+                customItem.ItemDrop.m_itemData.m_variant = cuirass.GetComponent<ItemDrop>().m_itemData.m_variant;
 
                 if (setPart != "head")        
                     customItem.ItemDrop.m_itemData.m_shared.m_movementModifier = (float)armortTier.moveSpeed;
@@ -39,8 +66,8 @@ namespace ReworkedArmors
                     customItem.ItemDrop.m_itemData.m_shared.m_armor -= 6;
                 }
 
-                Recipe instance = ScriptableObject.CreateInstance<Recipe>();
-                instance.name = string.Format("Recipe_{0}T{1}", armorId, i);
+                Recipe recipx = ScriptableObject.CreateInstance<Recipe>();
+                recipx.name = string.Format("Recipe_{0}T{1}", armorId, i);
 
                 List<Piece.Requirement> requirementList = new List<Piece.Requirement>();
                 foreach (Cost cost in armortTier.costs.Where(x => x.itemType == setPart))
@@ -49,11 +76,11 @@ namespace ReworkedArmors
                     requirementList.Last().m_amountPerLevel = cost.perLevel;
                 }
 
-                instance.m_craftingStation = PrefabManager.Cache.GetPrefab<CraftingStation>(armortTier.station);
-                instance.m_minStationLevel = armortTier.minLevel;
-                instance.m_resources = requirementList.ToArray();
-                instance.m_item = customItem.ItemDrop;
-                CustomRecipe customRecipe = new CustomRecipe(instance, true, true);
+                recipx.m_craftingStation = PrefabManager.Cache.GetPrefab<CraftingStation>(armortTier.station);
+                recipx.m_minStationLevel = armortTier.minLevel;
+                recipx.m_resources = requirementList.ToArray();
+                recipx.m_item = customItem.ItemDrop;
+                CustomRecipe customRecipe = new CustomRecipe(recipx, true, true);
                 customItem.Recipe = customRecipe;
 
                 ItemManager.Instance.AddItem(customItem);
