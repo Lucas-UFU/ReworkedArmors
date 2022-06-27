@@ -1,15 +1,9 @@
 ﻿using BepInEx;
-using BepInEx.Bootstrap;
 using HarmonyLib;
 using Jotunn.Managers;
-using Jotunn.Utils;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-using UnityEngine;
 
 namespace ReworkedArmors
 {
@@ -21,7 +15,7 @@ namespace ReworkedArmors
         public static readonly string ModPath = Path.GetDirectoryName(typeof(ReworkedArmors).Assembly.Location);
         public static Root root = new Root();
         public static List<StatusEffect> effects = null;
-
+        
         private void Awake()
         {
             string filePath = System.IO.Path.GetFullPath(@"..\..\");
@@ -53,7 +47,6 @@ namespace ReworkedArmors
                 ArmorHelper.AddArmorPiece("sagerobe", "chest", color);
                 ArmorHelper.AddArmorPiece("sagehood", "head", color);
             }
-
         }
     }
 }

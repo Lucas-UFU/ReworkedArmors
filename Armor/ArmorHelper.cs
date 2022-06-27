@@ -2,7 +2,6 @@
 using Jotunn.Managers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace ReworkedArmors
@@ -13,13 +12,7 @@ namespace ReworkedArmors
         {
             Armor armorConfig = ReworkedArmors.root.armors.Where(x => x.type == setName).FirstOrDefault();
             int startingTier = armorConfig.startingTier;
-            string armorId = "";
-
-            if (setPart == "head") armorId = armorConfig.helmetID;
-            if (setPart == "chest") armorId = armorConfig.chestID;
-            if (setPart == "legs") armorId = armorConfig.legsID;
-
-            if (!string.IsNullOrEmpty(color)) armorId += color;
+            string armorId = getArmorId(setPart, color, armorConfig);
 
             StatusEffect effect = ObjectDB.m_instance.GetStatusEffect(armorConfig.helmetID);
 
@@ -29,10 +22,10 @@ namespace ReworkedArmors
                 GameObject oldItem = PrefabManager.Instance.GetPrefab(armorId);
                 StatusEffect oldItemEffect = oldItem.GetComponent<ItemDrop>().m_itemData.m_shared.m_setStatusEffect;
 
-                if (oldItemEffect is not null) effect = oldItemEffect;
+                if (oldItemEffect is not null)
+                    effect = oldItemEffect;
 
                 CustomItem customItem = new CustomItem(armorId + "T" + i, armorId);
-                
                 if (customItem is null)
                 {
                     Debug.LogError("Reworked Armors - " + armorId + " not found");
@@ -57,8 +50,8 @@ namespace ReworkedArmors
                 customItem.ItemDrop.m_itemData.m_quality = cuirass.GetComponent<ItemDrop>().m_itemData.m_quality;
                 customItem.ItemDrop.m_itemData.m_variant = cuirass.GetComponent<ItemDrop>().m_itemData.m_variant;
 
-                if (setPart != "head")        
-                    customItem.ItemDrop.m_itemData.m_shared.m_movementModifier = (float)armortTier.moveSpeed;
+                if (setPart != "head")
+                    customItem.ItemDrop.m_itemData.m_shared.m_movementModifier = (float) armortTier.moveSpeed;
 
                 if (armorConfig.NoSpeedPenaltyAnd6ArmorDebuff)
                 {
@@ -85,6 +78,28 @@ namespace ReworkedArmors
 
                 ItemManager.Instance.AddItem(customItem);
             }
+        }
+
+        private static string getArmorId(string setPart, string color, Armor armorConfig)
+        {
+            string armorId = "";
+
+            switch (setPart)
+            {
+                case "head":
+                    armorId = armorConfig.helmetID;
+                    break;
+                case "chest":
+                    armorId = armorConfig.chestID;
+                    break;
+                case "legs":
+                    armorId = armorConfig.legsID;
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(color))
+                armorId += color;
+            return armorId;
         }
 
         public static void RevemoOriginalVersion(string setName)
