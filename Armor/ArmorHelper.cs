@@ -43,7 +43,7 @@ namespace ReworkedArmors
                 customItem.ItemDrop.m_itemData.m_shared.m_useDurabilityDrain = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_useDurabilityDrain;
                 customItem.ItemDrop.m_itemData.m_shared.m_durabilityPerLevel = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_durabilityPerLevel;
                 customItem.ItemDrop.m_itemData.m_shared.m_canBeReparied = true;
-                customItem.ItemDrop.m_itemData.m_shared.m_destroyBroken = true;
+                customItem.ItemDrop.m_itemData.m_shared.m_destroyBroken = false;
                 customItem.ItemDrop.m_itemData.m_shared.m_useDurability = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_useDurability;
                 customItem.ItemDrop.m_itemData.m_shared.m_durabilityDrain = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_durabilityDrain;
                 customItem.ItemDrop.m_itemData.m_shared.m_maxQuality = cuirass.GetComponent<ItemDrop>().m_itemData.m_shared.m_maxQuality;

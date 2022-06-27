@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ReworkedArmors
 {
-    [BepInPlugin("Detalhes.ReworkedArmors", "ReworkedArmors", "1.1.6")]
+    [BepInPlugin("Detalhes.ReworkedArmors", "ReworkedArmors", "1.1.7")]
     public class ReworkedArmors : BaseUnityPlugin
     {
         public const string PluginGUID = "Detalhes.ReworkedArmors";
